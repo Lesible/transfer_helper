@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.relic.mapper.TaskMapper">
+
+    <sql id="table_columns">
+        id,
+        task_name,
+        task_status,
+        task_description
+    </sql>
+
+    <resultMap id="resultMap" type="com.relic.entity.TaskEntity">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="taskName" column="task_name" jdbcType="VARCHAR"/>
+        <result property="taskStatus" column="task_status" jdbcType="INTEGER"/>
+        <result property="taskDescription" column="task_description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.relic.entity.TaskEntity">
+        insert into task
+        (
+        <include refid="table_columns"/>
+        )
+        values
+        (
+        #{id,jdbcType=BIGINT},
+        #{taskName,jdbcType=VARCHAR},
+        #{taskStatus,jdbcType=INTEGER},
+        #{taskDescription,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="getAll" resultMap="resultMap">
+        select
+        <include refid="table_columns"/>
+        from
+        task
+    </select>
+
+</mapper>

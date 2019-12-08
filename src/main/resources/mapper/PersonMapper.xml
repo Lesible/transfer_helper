@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.relic.mapper.PersonMapper">
+
+    <sql id="table_columns">
+        id,
+        name,
+        age,
+        gender,
+        update_date
+    </sql>
+
+    <sql id="table_name">
+        person
+    </sql>
+
+    <resultMap id="resultMap" type="com.relic.entity.Person">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="resultMap">
+        select
+        <include refid="table_columns"/>
+        from
+        <include refid="table_name"/>
+    </select>
+
+    <select id="selectByGender" resultMap="resultMap">
+        select
+        <include refid="table_columns"/>
+        from
+        <include refid="table_name"/>
+        where gender = #{gender,jdbcType=INTEGER}
+    </select>
+
+    <update id="update">
+        update
+        <include refid="table_name"/>
+        set update_date = #{updateDate,jdbcType=TIMESTAMP}
+        where id = #{taskDescription,jdbcType=BIGINT}
+    </update>
+
+</mapper>
