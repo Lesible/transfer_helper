@@ -8,10 +8,7 @@ import org.springframework.batch.core.*;
 import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobExecutionNotRunningException;
 import org.springframework.batch.core.launch.JobOperator;
-import org.springframework.batch.core.launch.NoSuchJobException;
 import org.springframework.batch.core.launch.NoSuchJobExecutionException;
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,16 +88,12 @@ public class TestController {
     }
 
     @RequestMapping("/restart/{jobId}")
-    public String restart(@PathVariable("jobId") Long jobId) {
-        try {
-            List<JobExecution> jobExecutions = getJobExecutions(jobId);
-            for (JobExecution jobExecution : jobExecutions) {
-                if (jobExecution.getStatus().equals(BatchStatus.STOPPED)) {
-                    jobOperator.restart(jobExecution.getId());
-                }
+    public String restart(@PathVariable("jobId") Long jobId) throws Exception {
+        List<JobExecution> jobExecutions = getJobExecutions(jobId);
+        for (JobExecution jobExecution : jobExecutions) {
+            if (jobExecution.getStatus().equals(BatchStatus.STOPPED)) {
+                jobOperator.restart(jobExecution.getId());
             }
-        } catch (JobParametersInvalidException | JobInstanceAlreadyCompleteException | JobRestartException | NoSuchJobExecutionException | NoSuchJobException e) {
-            e.printStackTrace();
         }
         return "重启成功";
     }

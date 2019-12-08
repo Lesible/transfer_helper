@@ -41,10 +41,10 @@ public class WriterDefinition {
 
     @Bean
     public CompositeItemWriter<TaskEntity> compositeWriter(ItemWriter<TaskEntity> taskWriter,ItemWriter<TaskEntity> personWriter) {
-        List<ItemWriter<? super TaskEntity>> writerList = new ArrayList<>();
+        List<ItemWriter<? super TaskEntity>> writerList = new ArrayList<ItemWriter<? super TaskEntity>>();
         writerList.add(taskWriter);
         writerList.add(personWriter);
-        CompositeItemWriter<TaskEntity> writer = new CompositeItemWriter<>();
+        CompositeItemWriter<TaskEntity> writer = new CompositeItemWriter<TaskEntity>();
         writer.setDelegates(writerList);
         return writer;
     }
