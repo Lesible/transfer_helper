@@ -3,7 +3,6 @@ package com.relic.config;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,13 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  * @author yc
- *  * @data 2018年7月28日
- *  * @description 通过AOP切面设置全局事务，拦截service包下面所有方法
- *  * AOP术语：通知（Advice）、连接点（Joinpoint）、切入点（Pointcut)、切面（Aspect）、目标(Target)、代理(Proxy)、织入（Weaving）
- *  
+ * 事务配置
+ *
+ * @author Relic
  */
-//@Configuration
+@Configuration
 public class TransactionManagerConfig {
     private static final int TX_METHOD_TIMEOUT = 5;
 
